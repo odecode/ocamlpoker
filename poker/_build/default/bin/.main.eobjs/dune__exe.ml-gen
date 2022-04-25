@@ -1,0 +1,18 @@
+(** @canonical Dune__exe.Card *)
+module Card = Dune__exe__Card
+
+
+(** @canonical Dune__exe.Deck *)
+module Deck = Dune__exe__Deck
+
+
+(** @canonical Dune__exe.Main *)
+module Main = Dune__exe__Main
+
+
+(** @canonical Dune__exe.Player *)
+module Player = Dune__exe__Player
+
+
+(** @canonical Dune__exe.Suit *)
+module Suit = Dune__exe__Suit

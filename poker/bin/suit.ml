@@ -1,0 +1,1 @@
+type suit = Diamond | Club | Heart | Spade
