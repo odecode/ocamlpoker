@@ -1,10 +1,9 @@
 # dune exec poker
 # OCAMLPARAM: unset
 # Shared cache: disabled
-# Workspace root:
-# /mnt/c/Users/Otto/OneDrive/Skrivbord/projects/ProgrammingParadigms/PokerOCAML/poker
+# Workspace root: /mnt/c/Users/wotto/VSCodeProjects/OCamlPoker/ocamlpoker/poker
 # Auto-detected concurrency: 8
-$ /home/otto/.opam/4.11.1/bin/ocamlc.opt -config > /tmp/dune_aa8104_output
+$ /home/otto/.opam/4.11.1/bin/ocamlc.opt -config > /tmp/dune_7bac5b_output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -25,15 +24,15 @@ $ /home/otto/.opam/4.11.1/bin/ocamlc.opt -config > /tmp/dune_aa8104_output
 #        { "DUNE_OCAML_HARDCODED" : "/home/otto/.opam/4.11.1/lib"
 #        ; "DUNE_OCAML_STDLIB" : "/home/otto/.opam/4.11.1/lib/ocaml"
 #        ; "DUNE_SOURCEROOT" :
-#            "/mnt/c/Users/Otto/OneDrive/Skrivbord/projects/ProgrammingParadigms/PokerOCAML/poker"
+#            "/mnt/c/Users/wotto/VSCodeProjects/OCamlPoker/ocamlpoker/poker"
 #        ; "INSIDE_DUNE" :
-#            "/mnt/c/Users/Otto/OneDrive/Skrivbord/projects/ProgrammingParadigms/PokerOCAML/poker/_build/default"
+#            "/mnt/c/Users/wotto/VSCodeProjects/OCamlPoker/ocamlpoker/poker/_build/default"
 #        ; "OCAMLFIND_IGNORE_DUPS_IN" :
-#            "/mnt/c/Users/Otto/OneDrive/Skrivbord/projects/ProgrammingParadigms/PokerOCAML/poker/_build/install/default/lib"
+#            "/mnt/c/Users/wotto/VSCodeProjects/OCamlPoker/ocamlpoker/poker/_build/install/default/lib"
 #        ; "OCAMLPATH" :
-#            "/mnt/c/Users/Otto/OneDrive/Skrivbord/projects/ProgrammingParadigms/PokerOCAML/poker/_build/install/default/lib"
+#            "/mnt/c/Users/wotto/VSCodeProjects/OCamlPoker/ocamlpoker/poker/_build/install/default/lib"
 #        ; "OCAMLTOP_INCLUDE_PATH" :
-#            "/mnt/c/Users/Otto/OneDrive/Skrivbord/projects/ProgrammingParadigms/PokerOCAML/poker/_build/install/default/lib/toplevel"
+#            "/mnt/c/Users/wotto/VSCodeProjects/OCamlPoker/ocamlpoker/poker/_build/install/default/lib/toplevel"
 #        ; "OCAML_COLOR" : "always"
 #        ; "OPAMCOLOR" : "always"
 #        }
