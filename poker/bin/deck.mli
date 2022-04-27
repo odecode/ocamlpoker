@@ -2,11 +2,12 @@ type suit
 
 type rank
 
-type card
+type card = {rank: rank; suit: suit}
 
 type deck = card list
 
-val  createdeck : card list -> int -> deck
+(* val  createdeck : card list -> int -> deck *)
+val  createdeck2 : card list -> int -> deck
 
 val draw_card : deck -> int -> card
 
@@ -20,4 +21,8 @@ val print_card : card -> unit
 
 val index_of_card : card -> deck -> int -> int
 
-val score_hand : deck -> int
+val createHand : deck -> deck
+
+(* val rank_to_int : rank -> int *)
+
+(* val score_hand : deck -> int *)

@@ -1,5 +1,6 @@
 open Deck
-open Player
+(* open Player *)
+open Handscore
 
 let () = print_endline "Hello, World!"
 let () = print_endline "Input how many players:"
@@ -10,9 +11,18 @@ let nplayersstr = string_of_int nplayers
 
 let () = print_endline nplayersstr
 
+let hand = createHand []
+let () = print_endline "Success after createHand"
+
+let fh = has_fullhouse hand
+
+let fhstr = string_of_bool fh
+
+let () = print_endline fhstr
 
 
-let mydeck = createdeck ([]) (0)
+
+(* let mydeck = createdeck2 ([]) (0)
 
 (*
    
@@ -31,7 +41,7 @@ let lstr = string_of_int listlen
 let () = print_endline "Deck length after creating players"
 let () = print_endline lstr
 
-(* let mycard = List.nth me.cards 0
+let mycard = List.nth me.cards 0
 let () = print_card mycard
 
 let mycard = List.nth me.cards 1
@@ -43,9 +53,6 @@ let () = print_card mycard
 let mycard = List.nth me.cards 3
 let () = print_card mycard *)
 
-let score = score_hand me.cards
-let scorestr = string_of_int score
-let () = print_endline scorestr
 
 
 

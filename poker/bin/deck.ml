@@ -1,7 +1,7 @@
 type suit = Diamond | Club | Heart | Spade
 type rank = Two | Three | Four | Five | Six | Seven | Eight | Nine | Ten | J | Q | K | A
 
-type card = rank * suit
+type card = {rank: rank; suit: suit}
 
 
 
@@ -23,7 +23,7 @@ let rank_to_string (r : rank): string =
     | K -> "K"
     | A -> "A"
 
-let rank_to_int (r : rank): int =
+(* let rank_to_int (r : rank): int =
     match r with
     | A -> 0
     | Two -> 1
@@ -37,7 +37,7 @@ let rank_to_int (r : rank): int =
     | Ten -> 9
     | J -> 10
     | Q -> 11
-    | K -> 12
+    | K -> 12 *)
     
 
 let int_to_rank (n : int): rank = 
@@ -84,23 +84,34 @@ let suit_to_string (s : suit) : string =
 
 type deck = card list
 
-(* let deck_to_score (d : deck) : int =
-    match d with
-    | rank *)
 
-let rec createdeck (partial_deck : deck) (cur_card: int) : deck =
+
+let rec createdeck2 (partial_deck : deck) (cur_card: int) : deck =
+    let cursuit = cur_card / 13 in
+    let currank = cur_card mod 13 in
+    if cur_card == 52 || cursuit > 3 then partial_deck
+    else
+        let ranktype = int_to_rank (currank) in 
+        let suittype = int_to_suit (cursuit) in
+        let newcard = {rank= ranktype; suit= suittype} in
+        createdeck2 ( newcard
+        :: partial_deck)
+        (cur_card +1)
+
+
+(* let rec createdeck (partial_deck : deck) (cur_card: int) : deck =
     let cursuit = cur_card / 13 in
     let currank = cur_card mod 13 in
     if cur_card == 52 || cursuit > 3 then partial_deck
     else
         createdeck ((int_to_rank (currank), int_to_suit (cursuit))
         :: partial_deck)
-        (cur_card +1)
+        (cur_card +1) *)
 
-let card_to_string ((rank,suit) : card) : string =
+let card_to_string (cardIn : card) : string =
     Printf.sprintf "%s of %s"
-        (rank_to_string(rank))
-        (suit_to_string(suit))
+        (rank_to_string(cardIn.rank))
+        (suit_to_string(cardIn.suit))
 
 
 let draw_card (cardset : deck) (whichCard : int) : card =
@@ -111,17 +122,7 @@ let draw_random_card (cardset: deck) : card =
     let randnum = Random.int (List.length cardset) in 
     draw_card cardset randnum
 
-(*
-   
-let rec print_deck (decktocheck : deck) (cur_card_nr) : unit =
-    let curcard = List.nth decktocheck cur_card_nr in
-    let cardstr = card_to_string curcard in
-    let () = print_endline cardstr in
-    if cur_card_nr < 52 then print_deck(decktocheck) (cur_card_nr+1)
-    else let () = print_endline "done" in
-    ()
-    
-*)
+
 
 let delete_from_deck2 (olddeck : deck) (whichCard : int) : deck =
     let badcard = List.nth olddeck whichCard in
@@ -130,42 +131,29 @@ let delete_from_deck2 (olddeck : deck) (whichCard : int) : deck =
 
     newdeck
 
-let score_hand (hand : deck) : int =
-    let ranklist = List.map (fun ((rank,suit):card) -> rank) hand in
-   let asd = List.map (rank_to_int) ranklist in
-   let rec sumasd (inputlist : int list) (cur : int) (sum : )
-
-
-(* let rec delete_from_deck (cardset : deck) (newdeck : deck) (whichCard : int) (curcard : int) : deck =
-    (*
-    let () = print_endline "in delete_from_deck" in
-    *)
-    let thiscard = draw_card cardset curcard in
-    
-    if (List.length newdeck) == (List.length cardset)-1 then newdeck
-    else if curcard != whichCard then delete_from_deck cardset (thiscard :: newdeck) (whichCard) (curcard)
-    else
-        delete_from_deck cardset newdeck whichCard (curcard+1) *)
-
-(*
-   
-
-let printcard (cardset : deck) (whichCard : int) : string =
-    let mycard = List.nth cardset whichCard in
-    let cardstr = card_to_string mycard in
-    cardstr
-    
-*)
 
 let rec index_of_card (item : card) (cardlist : deck) (index : int) : int =
     (*
     let () = print_endline "in index of card" in
     *)
     match cardlist with
-    | [] -> 0
+    | [] -> -1
     | first :: tail -> if first = item then index else index_of_card item tail (index+1)
 
 let print_card (cardIn : card) : unit =
     let cardstring = card_to_string cardIn in
     let () = print_endline cardstring in
     ()
+
+let rec createHand (decksofar: deck): deck =
+    if List.length decksofar == 5 then
+    let () = print_endline "Success in createHand" in    
+    decksofar else
+    let () = print_endline "Give rank" in
+    let rankint = read_int () in
+    let () = print_endline "Give suit" in
+    let suitint = read_int () in
+    let ranktype = int_to_rank rankint in
+    let suittype = int_to_suit suitint in
+    let newcard = {rank=ranktype; suit=suittype} in
+    createHand (newcard :: decksofar)

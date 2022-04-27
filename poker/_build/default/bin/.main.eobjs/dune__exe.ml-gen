@@ -6,6 +6,10 @@ module Card = Dune__exe__Card
 module Deck = Dune__exe__Deck
 
 
+(** @canonical Dune__exe.Handscore *)
+module Handscore = Dune__exe__Handscore
+
+
 (** @canonical Dune__exe.Main *)
 module Main = Dune__exe__Main
 
