@@ -1,1 +1,1 @@
-bin/player.ml: Deck
+bin/player.ml: Deck Random

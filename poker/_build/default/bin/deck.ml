@@ -3,6 +3,8 @@ type rank = Two | Three | Four | Five | Six | Seven | Eight | Nine | Ten | J | Q
 
 type card = rank * suit
 
+
+
 exception InvalidCard
 
 let rank_to_string (r : rank): string =
@@ -20,7 +22,7 @@ let rank_to_string (r : rank): string =
     | Q -> "Q"
     | K -> "K"
     | A -> "A"
-(*
+
 let rank_to_int (r : rank): int =
     match r with
     | A -> 0
@@ -37,7 +39,7 @@ let rank_to_int (r : rank): int =
     | Q -> 11
     | K -> 12
     
-*)
+
 let int_to_rank (n : int): rank = 
     match n with
     | 0 -> A
@@ -80,8 +82,11 @@ let suit_to_string (s : suit) : string =
     | Heart -> "Heart"
     | Spade -> "Spade"
 
-
 type deck = card list
+
+(* let deck_to_score (d : deck) : int =
+    match d with
+    | rank *)
 
 let rec createdeck (partial_deck : deck) (cur_card: int) : deck =
     let cursuit = cur_card / 13 in
@@ -117,7 +122,21 @@ let rec print_deck (decktocheck : deck) (cur_card_nr) : unit =
     ()
     
 *)
-let rec delete_from_deck (cardset : deck) (newdeck : deck) (whichCard : int) (curcard : int) : deck =
+
+let delete_from_deck2 (olddeck : deck) (whichCard : int) : deck =
+    let badcard = List.nth olddeck whichCard in
+    
+    let newdeck = List.filter (fun card -> card != badcard) olddeck in
+
+    newdeck
+
+let score_hand (hand : deck) : int list =
+    let ranklist = List.map (fun ((rank,suit):card) -> rank) hand in
+   let asd = List.map (rank_to_int) ranklist in
+   asd
+
+
+(* let rec delete_from_deck (cardset : deck) (newdeck : deck) (whichCard : int) (curcard : int) : deck =
     (*
     let () = print_endline "in delete_from_deck" in
     *)
@@ -126,7 +145,7 @@ let rec delete_from_deck (cardset : deck) (newdeck : deck) (whichCard : int) (cu
     if (List.length newdeck) == (List.length cardset)-1 then newdeck
     else if curcard != whichCard then delete_from_deck cardset (thiscard :: newdeck) (whichCard) (curcard)
     else
-        delete_from_deck cardset newdeck whichCard (curcard+1)
+        delete_from_deck cardset newdeck whichCard (curcard+1) *)
 
 (*
    
