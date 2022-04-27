@@ -1,16 +1,19 @@
 open Deck
 
 
-let rec check_same_rank (hand: deck) (cardtocheck_index: int) (curcard_index: int) (samesofar: int) : int =
-  let handlength = List.length hand in
-  if curcard_index == handlength-1 then 
-  let () = print_endline (string_of_int samesofar) in
-  samesofar
-  else
-    let cardtocheck = List.nth hand cardtocheck_index in
-    let curcard = List.nth hand curcard_index in
-    if cardtocheck.rank == curcard.rank then check_same_rank hand (cardtocheck_index) (curcard_index+1) (samesofar+1)
-    else check_same_rank hand (cardtocheck_index) (curcard_index+1) samesofar
+let rec check_same_rank (hand: deck) (cardtocheck_index: int) (curcard_index: int) (samesofar: int)  : int =
+ if curcard_index > 4 then samesofar else
+  let curcard = List.nth hand curcard_index in
+  let cardtocheck = List.nth hand cardtocheck_index in
+
+  (* let () = print_endline "CurCard = " in
+
+  let () = print_card curcard in
+  let () = print_endline "CardToCheck = " in 
+  let () = print_card cardtocheck in *)
+
+  if curcard.rank == cardtocheck.rank then check_same_rank hand cardtocheck_index (curcard_index+1) (samesofar+1)
+  else check_same_rank hand cardtocheck_index (curcard_index+1) samesofar
 
 
 (* let rec check_same_suit (hand: deck) (cardtocheck_index: int) (curcard_index: int) (samesofar: int) : int =
@@ -26,20 +29,29 @@ let rec check_same_rank (hand: deck) (cardtocheck_index: int) (curcard_index: in
 
 
 let has_fullhouse (hand: deck) : bool =
+  (* let samecards = [] in
+  for cardtocheckindex = 0 to 4 do
+    let samevals = check_same_rank hand cardtocheckindex 0 0 in
+    (* let stri = string_of_int samevals in
+    let () = print_endline stri in *)
+    samecards = samevals :: samecards
+  done; *)
+  
   let rec samecheck (handIn: deck) (cardtocheckindex : int) (returnlist : int list) : int list =
     if cardtocheckindex == 5 then returnlist else
     let samenumas = check_same_rank handIn cardtocheckindex 0 0 in
     samecheck handIn (cardtocheckindex+1) (samenumas :: returnlist) in
       
-    let rec printsamecards (sc : int list) (cur:int) : unit =
-      if cur == List.length sc then ()
-      else
-      let curint = List.nth sc cur in
-      let curstr = string_of_int curint in
-      let () = print_endline curstr in
-      printsamecards sc (cur+1) in
-  let samecards = samecheck hand 0 [] in
+  let rec printsamecards (sc : int list) (cur:int) : unit =
+    if cur == List.length sc then ()
+    else
+    let curint = List.nth sc cur in
+    let curstr = string_of_int curint in
+    let () = print_endline curstr in 
+    printsamecards sc (cur+1) in
   
+  let samecards = samecheck hand 0 [] in
+
   let () = printsamecards samecards 0 in
 
 
