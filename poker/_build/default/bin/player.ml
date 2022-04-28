@@ -1,10 +1,10 @@
 open Deck
-type player = {cards: deck; mutable cash: int; bot: bool; aggression: float}
+type player = {cards: deck; mutable cash: int; bot: bool; aggression: float; id: int}
 
 type returnplayer = {playerback: player; deckback: deck}
 type deckpair = {maindeck: deck; hand: deck}
 
-let createplayer (mdeck : deck) (isbot : bool) : returnplayer =
+let createplayer (mdeck : deck) (which : int) (isbot : bool) : returnplayer =
   let rec givecard (maindeck : deck) (drawncards: int) (returndeck : deck) : deckpair =
     if drawncards == 5 then {maindeck = maindeck; hand = returndeck} else
       (*
@@ -19,15 +19,15 @@ let createplayer (mdeck : deck) (isbot : bool) : returnplayer =
   let maindeckback = carddeckpair.maindeck in
   let () = Random.self_init() in
   let aggroLevel = Random.float 0.99 in
-  let newplayer = {cards = playerscards; cash = 100; bot = isbot; aggression=aggroLevel} in
+  let newplayer = {cards = playerscards; cash = 100; bot = isbot; aggression=aggroLevel; id=which} in
   {playerback = newplayer; deckback = maindeckback}
 
 let rec createAllPlayers (nplayers: int) (so_far : int) (players : returnplayer list) (deckIn: deck) : returnplayer list =
   if so_far == nplayers then players
-  else if nplayers == 0 then let recplayerdata = createplayer deckIn false in
+  else if nplayers == 0 then let recplayerdata = createplayer deckIn so_far false in
     let newdeck = recplayerdata.deckback in 
     createAllPlayers nplayers (so_far+1) (recplayerdata :: players) newdeck
-  else  let recplayerdata = createplayer deckIn true in
+  else  let recplayerdata = createplayer deckIn so_far true in
     let newdeck = recplayerdata.deckback in 
     createAllPlayers nplayers (so_far+1) (recplayerdata :: players) newdeck
 
