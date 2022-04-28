@@ -1,3 +1,7 @@
+(** @canonical Dune__exe.Bot *)
+module Bot = Dune__exe__Bot
+
+
 (** @canonical Dune__exe.Card *)
 module Card = Dune__exe__Card
 

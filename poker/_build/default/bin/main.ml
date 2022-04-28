@@ -1,6 +1,7 @@
 open Deck
 open Player
-open Handscore
+(* open Handscore *)
+open Bot
 
 let () = print_endline "Hello, World!"
 let () = print_endline "Input how many players:"
@@ -44,8 +45,8 @@ let () = print_endline flushstr *)
 
 let retplayerlist = createAllPlayers nplayers 0 [] mydeck
 
-let meret = List.nth retplayerlist (List.length (retplayerlist) -1)
-let me = meret.playerback
+(* let meret = List.nth retplayerlist (List.length (retplayerlist) -1)
+let me = meret.playerback *)
 let bot = List.nth retplayerlist 0
 let mydeck = bot.deckback
 
@@ -55,7 +56,11 @@ let lstr = string_of_int listlen
 let () = print_endline "Deck length after creating players"
 let () = print_endline lstr
 
-let mycard = List.nth me.cards 0
+let whatbotbets = bot_bet bot.playerback
+let () = print_endline "bot is betting "
+let () = print_endline (string_of_int whatbotbets)
+
+(* let mycard = List.nth me.cards 0
 let () = print_card mycard
 
 let mycard = List.nth me.cards 1
@@ -73,7 +78,7 @@ let () = print_card mycard
 let myscore = score_hand me.cards
 let mystr = string_of_int myscore
 let () = print_endline "My score is"
-let () = print_endline mystr
+let () = print_endline mystr *)
 
 
 

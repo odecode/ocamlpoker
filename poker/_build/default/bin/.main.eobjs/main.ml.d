@@ -1,1 +1,1 @@
-bin/main.ml: Deck Handscore List Player
+bin/main.ml: Bot Deck List Player
