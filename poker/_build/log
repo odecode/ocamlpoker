@@ -1,9 +1,10 @@
 # dune exec poker
 # OCAMLPARAM: unset
 # Shared cache: disabled
-# Workspace root: /mnt/c/Users/wotto/VSCodeProjects/OCamlPoker/ocamlpoker/poker
+# Workspace root:
+# /mnt/c/Users/Otto/OneDrive/Skrivbord/projects/ProgrammingParadigms/PokerOCAML/poker
 # Auto-detected concurrency: 8
-$ /home/otto/.opam/4.11.1/bin/ocamlc.opt -config > /tmp/dune_b843b7_output
+$ /home/otto/.opam/4.11.1/bin/ocamlc.opt -config > /tmp/dune_5ac8cf_output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -24,15 +25,15 @@ $ /home/otto/.opam/4.11.1/bin/ocamlc.opt -config > /tmp/dune_b843b7_output
 #        { "DUNE_OCAML_HARDCODED" : "/home/otto/.opam/4.11.1/lib"
 #        ; "DUNE_OCAML_STDLIB" : "/home/otto/.opam/4.11.1/lib/ocaml"
 #        ; "DUNE_SOURCEROOT" :
-#            "/mnt/c/Users/wotto/VSCodeProjects/OCamlPoker/ocamlpoker/poker"
+#            "/mnt/c/Users/Otto/OneDrive/Skrivbord/projects/ProgrammingParadigms/PokerOCAML/poker"
 #        ; "INSIDE_DUNE" :
-#            "/mnt/c/Users/wotto/VSCodeProjects/OCamlPoker/ocamlpoker/poker/_build/default"
+#            "/mnt/c/Users/Otto/OneDrive/Skrivbord/projects/ProgrammingParadigms/PokerOCAML/poker/_build/default"
 #        ; "OCAMLFIND_IGNORE_DUPS_IN" :
-#            "/mnt/c/Users/wotto/VSCodeProjects/OCamlPoker/ocamlpoker/poker/_build/install/default/lib"
+#            "/mnt/c/Users/Otto/OneDrive/Skrivbord/projects/ProgrammingParadigms/PokerOCAML/poker/_build/install/default/lib"
 #        ; "OCAMLPATH" :
-#            "/mnt/c/Users/wotto/VSCodeProjects/OCamlPoker/ocamlpoker/poker/_build/install/default/lib"
+#            "/mnt/c/Users/Otto/OneDrive/Skrivbord/projects/ProgrammingParadigms/PokerOCAML/poker/_build/install/default/lib"
 #        ; "OCAMLTOP_INCLUDE_PATH" :
-#            "/mnt/c/Users/wotto/VSCodeProjects/OCamlPoker/ocamlpoker/poker/_build/install/default/lib/toplevel"
+#            "/mnt/c/Users/Otto/OneDrive/Skrivbord/projects/ProgrammingParadigms/PokerOCAML/poker/_build/install/default/lib/toplevel"
 #        ; "OCAML_COLOR" : "always"
 #        ; "OPAMCOLOR" : "always"
 #        }
@@ -114,4 +115,5 @@ $ /home/otto/.opam/4.11.1/bin/ocamlc.opt -config > /tmp/dune_b843b7_output
 $ (cd _build/default && /home/otto/.opam/4.11.1/bin/ocamldep.opt -modules -impl bin/handscore.ml) > _build/default/bin/.main.eobjs/handscore.ml.d
 $ (cd _build/default && /home/otto/.opam/4.11.1/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I bin/.main.eobjs/byte -I lib/.poker.objs/byte -no-alias-deps -opaque -open Dune__exe -o bin/.main.eobjs/byte/dune__exe__Handscore.cmo -c -impl bin/handscore.ml)
 $ (cd _build/default && /home/otto/.opam/4.11.1/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I lib/.poker.objs/byte -I lib/.poker.objs/native -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o bin/.main.eobjs/native/dune__exe__Handscore.cmx -c -impl bin/handscore.ml)
+$ (cd _build/default && /home/otto/.opam/4.11.1/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I lib/.poker.objs/byte -I lib/.poker.objs/native -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl bin/main.ml)
 $ (cd _build/default && /home/otto/.opam/4.11.1/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -o bin/main.exe lib/poker.cmxa bin/.main.eobjs/native/dune__exe.cmx bin/.main.eobjs/native/dune__exe__Deck.cmx bin/.main.eobjs/native/dune__exe__Handscore.cmx bin/.main.eobjs/native/dune__exe__Main.cmx)

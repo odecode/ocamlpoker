@@ -23,7 +23,7 @@ let rank_to_string (r : rank): string =
     | K -> "K"
     | A -> "A"
 
-(* let rank_to_int (r : rank): int =
+let rank_to_int (r : rank): int =
     match r with
     | A -> 0
     | Two -> 1
@@ -37,7 +37,7 @@ let rank_to_string (r : rank): string =
     | Ten -> 9
     | J -> 10
     | Q -> 11
-    | K -> 12 *)
+    | K -> 12
     
 
 let int_to_rank (n : int): rank = 
@@ -157,3 +157,10 @@ let rec createHand (decksofar: deck): deck =
     let suittype = int_to_suit suitint in
     let newcard = {rank=ranktype; suit=suittype} in
     createHand (newcard :: decksofar)
+
+let rec print_deck (d : deck) (curcard : int) : unit =
+    if curcard == List.length d then () else
+    let card = List.nth d curcard in
+    let () = print_card card in
+    print_deck d (curcard+1)
+    
