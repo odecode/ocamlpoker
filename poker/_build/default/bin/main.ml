@@ -14,12 +14,26 @@ let () = print_endline nplayersstr
 let hand = createHand []
 let () = print_endline "Success after createHand"
 
-let fh = has_fullhouse hand
+let straight = has_straight hand
+
+let fhstr = string_of_bool straight
+
+let () = print_endline fhstr
+
+
+
+
+(* let fh = has_fullhouse hand
 
 let fhstr = string_of_bool fh
 
 let () = print_endline fhstr
 
+let flush = has_flush hand
+
+let flushstr = string_of_bool flush
+
+let () = print_endline flushstr *)
 
 
 (* let mydeck = createdeck2 ([]) (0)

@@ -23,6 +23,12 @@ val index_of_card : card -> deck -> int -> int
 
 val createHand : deck -> deck
 
-(* val rank_to_int : rank -> int *)
+val print_deck : deck -> int -> unit
+
+val rank_to_int : rank -> int
+
+val int_to_rank : int -> rank
+
+val int_to_suit : int -> suit
 
 (* val score_hand : deck -> int *)

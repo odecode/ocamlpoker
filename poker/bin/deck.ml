@@ -1,5 +1,5 @@
 type suit = Diamond | Club | Heart | Spade
-type rank = Two | Three | Four | Five | Six | Seven | Eight | Nine | Ten | J | Q | K | A
+type rank = Two | Three | Four | Five | Six | Seven | Eight | Nine | Ten | J | Q | K | ALOW | AHIGH
 
 type card = {rank: rank; suit: suit}
 
@@ -21,11 +21,12 @@ let rank_to_string (r : rank): string =
     | J -> "J"
     | Q -> "Q"
     | K -> "K"
-    | A -> "A"
+    | ALOW -> "A"
+    | AHIGH -> "A"
 
-(* let rank_to_int (r : rank): int =
+let rank_to_int (r : rank): int =
     match r with
-    | A -> 0
+    | ALOW -> 0
     | Two -> 1
     | Three -> 2
     | Four -> 3
@@ -37,12 +38,12 @@ let rank_to_string (r : rank): string =
     | Ten -> 9
     | J -> 10
     | Q -> 11
-    | K -> 12 *)
-    
+    | K -> 12
+    | AHIGH -> 13
 
 let int_to_rank (n : int): rank = 
     match n with
-    | 0 -> A
+    | 0 -> ALOW
     | 1 -> Two
     | 2 -> Three
     | 3 -> Four
@@ -55,6 +56,7 @@ let int_to_rank (n : int): rank =
     | 10 -> J
     | 11 -> Q
     | 12 -> K
+    | 13 -> AHIGH
     | _ -> raise InvalidCard
 
 
@@ -157,3 +159,10 @@ let rec createHand (decksofar: deck): deck =
     let suittype = int_to_suit suitint in
     let newcard = {rank=ranktype; suit=suittype} in
     createHand (newcard :: decksofar)
+
+let rec print_deck (d : deck) (curcard : int) : unit =
+    if curcard == List.length d then () else
+    let card = List.nth d curcard in
+    let () = print_card card in
+    print_deck d (curcard+1)
+    
