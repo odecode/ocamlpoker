@@ -3,138 +3,43 @@ open Player
 (* open Handscore *)
 open Bot
 
-let () = print_endline "Hello, World!"
-let () = print_endline "Input how many players:"
+(* let rec main_game_loop (timesmax : int) (timesnow : int) : unit =
+  if timesnow == timesmax then () else *)
+  let () = print_endline "Welcome to OCamlPoker - by Otto Westerlund" 
+  let play_game () : returnplayer list =
+    let mydeck = createdeck2 [] 0 in
+    let () = print_endline "Input how many players:" in
+    let nplayers = read_int () in
+    let retplayerlist = createAllPlayers nplayers 0 [] mydeck in
+    let rec calc_bot_bets (num_players : int) (players : returnplayer list) (curbot_index : int) (returnlist : int list) : int list =
+      if num_players == curbot_index then returnlist else
+      let currentbotretplayer = List.nth players curbot_index in
+      let currentbot = currentbotretplayer.playerback in
+      (* let bothand = currentbot.cards in *)
+      let bot_bet_result = bot_bet currentbot in
+      let () = currentbot.cash <- currentbot.cash - bot_bet_result in
+      calc_bot_bets num_players players (curbot_index+1) (bot_bet_result::returnlist) in
+    
+    let all_bot_bets = calc_bot_bets nplayers retplayerlist 0 [] in
+    
+    let rec print_bets (asd : int list) (current : int) : unit =
+      let len = List.length asd in
+      if current == len then () else
+      let () = print_endline (string_of_int (List.nth asd current)) in
+      print_bets asd (current+1) in
 
-let nplayers = read_int ()
-let nplayersstr = string_of_int nplayers
+    let () = print_bets all_bot_bets 0 in
 
-
-let () = print_endline nplayersstr
-
-(* let hand = createHand []
-let () = print_endline "Success after createHand"
-
-let score = score_hand hand
-
-let scorestr = string_of_int score
-
-let () = print_endline scorestr *)
-
-
-
-
-(* let fh = has_fullhouse hand
-
-let fhstr = string_of_bool fh
-
-let () = print_endline fhstr
-
-let flush = has_flush hand
-
-let flushstr = string_of_bool flush
-
-let () = print_endline flushstr *)
-
-
- let mydeck = createdeck2 ([]) (0)
-
-(*
-   
-*)
-
-let retplayerlist = createAllPlayers nplayers 0 [] mydeck
-
-(* let meret = List.nth retplayerlist (List.length (retplayerlist) -1)
-let me = meret.playerback *)
-let bot = List.nth retplayerlist 0
-let mydeck = bot.deckback
-
-let listlen = List.length mydeck
-let lstr = string_of_int listlen
-
-let () = print_endline "Deck length after creating players"
-let () = print_endline lstr
-
-let whatbotbets = bot_bet bot.playerback
-let () = print_endline "bot is betting "
-let () = print_endline (string_of_int whatbotbets)
-
-(* let mycard = List.nth me.cards 0
-let () = print_card mycard
-
-let mycard = List.nth me.cards 1
-let () = print_card mycard
-
-let mycard = List.nth me.cards 2
-let () = print_card mycard
-
-let mycard = List.nth me.cards 3
-let () = print_card mycard 
-
-let mycard = List.nth me.cards 4
-let () = print_card mycard 
-
-let myscore = score_hand me.cards
-let mystr = string_of_int myscore
-let () = print_endline "My score is"
-let () = print_endline mystr *)
+    retplayerlist
+  let retplist = play_game ()
+  let () = print_endline "Game over"
+  let () = print_endline (string_of_int ((List.nth retplist 0).playerback.cash))
+  (* if (List.nth retplist 0).playerback.cash > 0 then
+  let () = print_endline "Play again!" in
+  let () = main_game_loop timesmax (timesnow+1) in
+   *)
 
 
 
 
-
-
-
-
-
-
-
-
-(*
-   
-let () = print_endline "Next"
-let acard = draw_random_card (mydeck)
-let () = print_card (acard)
-let l = List.length mydeck
-let ls = string_of_int l
-let () = print_endline ls
-
-let () = print_endline "Orig deck length"
-let l = List.length mydeck
-let ls = string_of_int l
-let () = print_endline ls
-
-let newplayerrecord = createplayer (mydeck) (false)
-let newplayer = newplayerrecord.playerback
-let newdeck = newplayerrecord.deckback
-
-let cardlist = newplayer.cards
-let pcard = List.nth cardlist 4
-let () = print_card pcard
-
-let () = print_endline "Deck len after"
-let l = List.length newdeck
-let ls = string_of_int l
-let () = print_endline ls
-
-let () = print_endline "Player cards len"
-let l = List.length cardlist
-let ls = string_of_int l
-let () = print_endline ls
-
-let pot = 50
-
-let pcash = newplayer.cash
-let cashstr = string_of_int pcash
-let () = print_endline "Player cash"
-let () = print_endline cashstr
-
-let back = bet_cash (87) (pot) (pcash)
-let pcash = back.cashleft
-
-
-let cashstr = string_of_int pcash
-let () = print_endline "Player cash"
-let () = print_endline cashstr
-*)
+  (* main_game_loop 3 0 *)

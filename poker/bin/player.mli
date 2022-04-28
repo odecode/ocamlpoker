@@ -1,5 +1,5 @@
 open Deck
-type player = {cards: deck; cash: int; bot: bool; aggression: float}
+type player = {cards: deck; mutable cash: int; bot: bool; aggression: float}
 
 type returnplayer = {playerback: player; deckback: deck}
 
