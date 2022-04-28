@@ -1,5 +1,5 @@
 open Deck
-(* open Player *)
+open Player
 open Handscore
 
 let () = print_endline "Hello, World!"
@@ -11,14 +11,14 @@ let nplayersstr = string_of_int nplayers
 
 let () = print_endline nplayersstr
 
-let hand = createHand []
+(* let hand = createHand []
 let () = print_endline "Success after createHand"
 
-let straight = has_straight hand
+let score = score_hand hand
 
-let fhstr = string_of_bool straight
+let scorestr = string_of_int score
 
-let () = print_endline fhstr
+let () = print_endline scorestr *)
 
 
 
@@ -36,7 +36,7 @@ let flushstr = string_of_bool flush
 let () = print_endline flushstr *)
 
 
-(* let mydeck = createdeck2 ([]) (0)
+ let mydeck = createdeck2 ([]) (0)
 
 (*
    
@@ -65,8 +65,15 @@ let mycard = List.nth me.cards 2
 let () = print_card mycard
 
 let mycard = List.nth me.cards 3
-let () = print_card mycard *)
+let () = print_card mycard 
 
+let mycard = List.nth me.cards 4
+let () = print_card mycard 
+
+let myscore = score_hand me.cards
+let mystr = string_of_int myscore
+let () = print_endline "My score is"
+let () = print_endline mystr
 
 
 

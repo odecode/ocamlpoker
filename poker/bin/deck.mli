@@ -31,4 +31,6 @@ val int_to_rank : int -> rank
 
 val int_to_suit : int -> suit
 
+val suit_to_int : suit -> int
+
 (* val score_hand : deck -> int *)

@@ -60,7 +60,7 @@ let int_to_rank (n : int): rank =
     | _ -> raise InvalidCard
 
 
-(*
+
    
 let suit_to_int (s : suit) : int =
     match s with
@@ -68,7 +68,7 @@ let suit_to_int (s : suit) : int =
     | Club -> 1
     | Heart -> 2
     | Spade -> 3    
-*)
+
 let int_to_suit (n : int) : suit =
     match n with
     | 0 -> Diamond
