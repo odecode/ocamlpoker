@@ -79,9 +79,9 @@ let has_straight (hand : deck) : bool =
 
   let copyhand = newace :: (List.filter (fun card -> (rank_to_int card.rank) == 0) hand ) in
 
-  let chlen = List.length copyhand in
+  (* let chlen = List.length copyhand in *)
 
-  let () = print_endline "chlen " in
+  (* let () = print_endline "chlen " in
   
   let () = print_endline (string_of_int chlen) in
   
@@ -90,16 +90,16 @@ let has_straight (hand : deck) : bool =
   let () = print_deck hand 0 in
 
   let () =  print_endline "Copyhand " in 
-  let () = print_deck copyhand 0 in
+  let () = print_deck copyhand 0 in *)
   
   
   let hand_sorted = List.sort (fun x y -> compare (rank_to_int x.rank) (rank_to_int y.rank)) hand in
   
   let copyhand_sorted = List.sort(fun x y -> compare (rank_to_int x.rank) (rank_to_int y.rank)) copyhand in
-
+(* 
   let () = print_endline "Hand after sort" in
 
-  let () = print_deck hand_sorted 0 in
+  let () = print_deck hand_sorted 0 in *)
 
   
 

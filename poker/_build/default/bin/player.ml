@@ -24,7 +24,7 @@ let createplayer (mdeck : deck) (which : int) (isbot : bool) : returnplayer =
 
 let rec createAllPlayers (nplayers: int) (so_far : int) (players : returnplayer list) (deckIn: deck) : returnplayer list =
   if so_far == nplayers then players
-  else if nplayers == 0 then let recplayerdata = createplayer deckIn so_far false in
+  else if so_far == 0 then let recplayerdata = createplayer deckIn so_far false in
     let newdeck = recplayerdata.deckback in 
     createAllPlayers nplayers (so_far+1) (recplayerdata :: players) newdeck
   else  let recplayerdata = createplayer deckIn so_far true in
