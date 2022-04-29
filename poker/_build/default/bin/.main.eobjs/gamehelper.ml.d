@@ -1,1 +1,1 @@
-bin/gamehelper.ml: Bot Deck Handscore List Player
+bin/gamehelper.ml: Deck Handscore List Player

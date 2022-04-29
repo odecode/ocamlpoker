@@ -8,11 +8,12 @@ open Gamehelper
 
 
 let () = print_endline "Welcome to OCamlPoker - by Otto Westerlund" 
-let rec play_game () : int =
+let rec play_game (cashlist : cashrecord list) : int =
   let mydeck = createdeck2 [] 0 in
   let () = print_endline "Input how many players (including yourself):" in
   let nplayers = read_int () in
-  let retplayerlist = createAllPlayers nplayers 0 [] mydeck in
+  let retplayerlist = if (List.length cashlist) == 0 then createAllPlayers nplayers 0 [] mydeck
+  else createAllPlayersWithCash cashlist nplayers 0 [] mydeck in
 
   let melist = List.filter (fun retplayer -> retplayer.playerback.bot == false) retplayerlist in
   
@@ -54,24 +55,28 @@ let rec play_game () : int =
   let winner = Gamehelper.calc_winner nplayers retplayerlist in
   if winner == me then
   let () = meplayer.cash <- meplayer.cash+newpot in
+  let cashfornextgame = Gamehelper.make_cashlist retplayerlist 0 [] in
   let winstring = "YOU WIN (this hand) and you now have " ^ string_of_int (meplayer.cash) ^ " cash" in
   let () = print_endline winstring in
   let () = Gamehelper.show_cards bots 0 (List.length bots) in
   let () = print_endline "Continue? (1 for continue, any number for quit)" in
   let continue = read_int () in
-  if continue == 1 then play_game () else
+  if continue == 1 then play_game (cashfornextgame) else
   meplayer.cash
   
   else let winstring = "Winner is Bot " ^ string_of_int (winner.playerback.id) ^ " and you now have " ^ string_of_int meplayer.cash ^ " cash" in
+  let cashfornextgame = Gamehelper.make_cashlist retplayerlist 0 [] in
   let () = print_endline winstring in
   let () = Gamehelper.show_cards bots 0 (List.length bots) in
   let () = print_endline "Continue? (1 for continue, any number for quit)" in
   let continue = read_int () in
-  if continue == 1 then play_game () else
+  if continue == 1 then play_game (cashfornextgame) else
   meplayer.cash
  
- 
-let finalcash = play_game ()
+
+
+
+let finalcash = play_game ([])
 let byestring = "Game over, you walk away with " ^ string_of_int finalcash ^ " cash"
 let () = print_endline byestring
 

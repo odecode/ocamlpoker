@@ -1,14 +1,22 @@
 open Player
-open Bot
 
 type playerxscore = {player: returnplayer; score: int}
+
+
+let rec make_cashlist (rplayers : returnplayer list) (cur : int) (returnlist : cashrecord list) : cashrecord list =
+  let listlen = List.length rplayers in
+  if cur == listlen then  returnlist else
+  let retplayer = List.nth rplayers cur in
+  let player = retplayer.playerback in
+  let record = {id = player.id; cash=player.cash} in
+  make_cashlist rplayers (cur+1) (record::returnlist)
 
 let rec calc_bot_bets (num_players : int) (players : returnplayer list) (curbot_index : int) (returnlist : int list) : int list =
   if num_players-1 == curbot_index then returnlist else
   let currentbotretplayer = List.nth players curbot_index in
   let currentbot = currentbotretplayer.playerback in
   (* let bothand = currentbot.cards in *)
-  let bot_bet_result = bot_bet currentbot in
+  let bot_bet_result = Player.bot_bet currentbot in
   let betstr = "Bot " ^ string_of_int currentbot.id ^ " bets " ^ string_of_int bot_bet_result in
   let () = print_endline betstr in
   let () = currentbot.cash <- currentbot.cash - bot_bet_result in
