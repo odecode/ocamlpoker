@@ -8,7 +8,7 @@ open Gamehelper
 
 
 let () = print_endline "Welcome to OCamlPoker - by Otto Westerlund" 
-let play_game () : returnplayer list =
+let rec play_game () : int =
   let mydeck = createdeck2 [] 0 in
   let () = print_endline "Input how many players (including yourself):" in
   let nplayers = read_int () in
@@ -53,18 +53,26 @@ let play_game () : returnplayer list =
   
   let winner = Gamehelper.calc_winner nplayers retplayerlist in
   if winner == me then
-  let winstring = "YOU WIN (this hand) and you now have" ^ string_of_int (meplayer.cash+newpot) ^ " cash" in
+  let () = meplayer.cash <- meplayer.cash+newpot in
+  let winstring = "YOU WIN (this hand) and you now have " ^ string_of_int (meplayer.cash) ^ " cash" in
   let () = print_endline winstring in
   let () = Gamehelper.show_cards bots 0 (List.length bots) in
-  retplayerlist
-  else let winstring = "Winner is Bot " ^ string_of_int (winner.playerback.id) in
+  let () = print_endline "Continue? (1 for continue, any number for quit)" in
+  let continue = read_int () in
+  if continue == 1 then play_game () else
+  meplayer.cash
+  
+  else let winstring = "Winner is Bot " ^ string_of_int (winner.playerback.id) ^ " and you now have " ^ string_of_int meplayer.cash ^ " cash" in
   let () = print_endline winstring in
   let () = Gamehelper.show_cards bots 0 (List.length bots) in
-  retplayerlist
+  let () = print_endline "Continue? (1 for continue, any number for quit)" in
+  let continue = read_int () in
+  if continue == 1 then play_game () else
+  meplayer.cash
  
  
-let retplist = play_game ()
-let () = print_endline "Game over"
-let () = print_endline (string_of_int ((List.nth retplist 0).playerback.cash))
+let finalcash = play_game ()
+let byestring = "Game over, you walk away with " ^ string_of_int finalcash ^ " cash"
+let () = print_endline byestring
 
 
