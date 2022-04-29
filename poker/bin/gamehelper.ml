@@ -9,6 +9,8 @@ let rec calc_bot_bets (num_players : int) (players : returnplayer list) (curbot_
   let currentbot = currentbotretplayer.playerback in
   (* let bothand = currentbot.cards in *)
   let bot_bet_result = bot_bet currentbot in
+  let betstr = "Bot " ^ string_of_int currentbot.id ^ " bets " ^ string_of_int bot_bet_result in
+  let () = print_endline betstr in
   let () = currentbot.cash <- currentbot.cash - bot_bet_result in
   calc_bot_bets num_players players (curbot_index+1) (bot_bet_result::returnlist)
 

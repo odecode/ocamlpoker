@@ -27,7 +27,7 @@ let play_game () : returnplayer list =
     let partsum = List.nth listin cur in
     addlist listin (cur+1) (sum+partsum) listlen in
   
-  let () = print_bets all_bot_bets 0 in
+  (* let () = print_bets all_bot_bets 0 in *)
   let pot = addlist (all_bot_bets) 0 0 (nplayers-1) in  
   let potstr = "Pot is " ^ (string_of_int pot) in
   let () = print_endline potstr in

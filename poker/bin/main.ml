@@ -27,7 +27,7 @@ let play_game () : returnplayer list =
     let partsum = List.nth listin cur in
     addlist listin (cur+1) (sum+partsum) listlen in
   
-  let () = print_bets all_bot_bets 0 in
+  (* let () = print_bets all_bot_bets 0 in *)
   let pot = addlist (all_bot_bets) 0 0 (nplayers-1) in  
   let potstr = "Pot is " ^ (string_of_int pot) in
   let () = print_endline potstr in
@@ -53,7 +53,7 @@ let play_game () : returnplayer list =
   
   let winner = Gamehelper.calc_winner nplayers retplayerlist in
   if winner == me then
-  let winstring = "YOU WIN (this hand) and you now have" ^ string_of_int (meplayer.cash+newpot) ^ " cash" in
+  let winstring = "YOU WIN (this hand) and you now have " ^ string_of_int (meplayer.cash+newpot) ^ " cash" in
   let () = print_endline winstring in
   let () = Gamehelper.show_cards bots 0 (List.length bots) in
   retplayerlist
