@@ -9,49 +9,52 @@ open Gamehelper
 
 let () = print_endline "Welcome to OCamlPoker - by Otto Westerlund" 
 let rec play_game (cashlist : cashrecord list) (nplayers : int) : int =
-  let mydeck = createdeck2 [] 0 in
   
+  let mydeck = createdeck2 [] 0 in
+  (*creates the players (bots + user) *)
   let retplayerlist = if (List.length cashlist) == 0 then createAllPlayers nplayers 0 [] mydeck
   else createAllPlayersWithCash cashlist nplayers 0 [] mydeck in
 
+  (*filter out user*)
   let melist = List.filter (fun retplayer -> retplayer.playerback.bot == false) retplayerlist in
-  
   let me = List.nth melist 0 in
-
   let meplayer = me.playerback in  
   
   let all_bot_bets = calc_bot_bets nplayers retplayerlist 0 [] in
   
+
   let rec addlist (listin : int list) (cur : int) (sum : int) (listlen : int) : int =
     if cur == listlen then sum else
     let partsum = List.nth listin cur in
     addlist listin (cur+1) (sum+partsum) listlen in
   
-  (* let () = print_bets all_bot_bets 0 in *)
+   (* add bot bets to pot *)
   let pot = addlist (all_bot_bets) 0 0 (nplayers-1) in  
   let potstr = "Pot is " ^ (string_of_int pot) in
   let () = print_endline potstr in
 
   let () = print_endline "Your cards are:" in
-
   let () = print_deck meplayer.cards 0 in
 
   let mycash = string_of_int meplayer.cash in
   let outstr = "You have " ^ mycash ^ " cash, enter bet:" in
   let () = print_endline outstr in
+  
   let mybet = read_int () in
+  let mybet = if mybet > meplayer.cash then meplayer.cash else mybet in
 
   let newpot = addlist (mybet::all_bot_bets) 0 0 nplayers in
-
   let potstr = "Pot is " ^ (string_of_int newpot) in
-
   let () = print_endline potstr in
 
-  let () = meplayer.cash <- meplayer.cash-mybet in
+  (*if user enters larger bet than available cash, then bet = all available cash*)
+  let () =  if meplayer.cash - mybet < 0 then meplayer.cash <- 0 else meplayer.cash <- meplayer.cash - mybet in
+
 
   let bots = List.filter (fun retplayer -> retplayer.playerback.bot == true) retplayerlist in
   
   let winner = Gamehelper.calc_winner nplayers retplayerlist in
+  
   if winner == me then
   let () = meplayer.cash <- meplayer.cash+newpot in
   let cashfornextgame = Gamehelper.make_cashlist retplayerlist 0 [] in

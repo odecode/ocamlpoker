@@ -1,5 +1,10 @@
+(*Some of this file is inspired by a github repository I found: https://github.com/jakekara/ocaml-cardstuff/blob/master/cards.ml 
+ I used it as a base to learn some of the features of OCaml and then wrote the rest on my own   
+*)
+
 type suit = Diamond | Club | Heart | Spade
 type rank = Two | Three | Four | Five | Six | Seven | Eight | Nine | Ten | J | Q | K | ALOW | AHIGH
+
 
 type card = {rank: rank; suit: suit}
 
@@ -59,9 +64,7 @@ let int_to_rank (n : int): rank =
     | 13 -> AHIGH
     | _ -> raise InvalidCard
 
-
-
-   
+ 
 let suit_to_int (s : suit) : int =
     match s with
     | Diamond -> 0
@@ -87,7 +90,6 @@ let suit_to_string (s : suit) : string =
 type deck = card list
 
 
-
 let rec createdeck2 (partial_deck : deck) (cur_card: int) : deck =
     let cursuit = cur_card / 13 in
     let currank = cur_card mod 13 in
@@ -100,15 +102,6 @@ let rec createdeck2 (partial_deck : deck) (cur_card: int) : deck =
         :: partial_deck)
         (cur_card +1)
 
-
-(* let rec createdeck (partial_deck : deck) (cur_card: int) : deck =
-    let cursuit = cur_card / 13 in
-    let currank = cur_card mod 13 in
-    if cur_card == 52 || cursuit > 3 then partial_deck
-    else
-        createdeck ((int_to_rank (currank), int_to_suit (cursuit))
-        :: partial_deck)
-        (cur_card +1) *)
 
 let card_to_string (cardIn : card) : string =
     Printf.sprintf "%s of %s"
@@ -125,7 +118,7 @@ let draw_random_card (cardset: deck) : card =
     draw_card cardset randnum
 
 
-
+(*filters all cards except chosen card into a new deck*)
 let delete_from_deck2 (olddeck : deck) (whichCard : int) : deck =
     let badcard = List.nth olddeck whichCard in
     
@@ -133,11 +126,8 @@ let delete_from_deck2 (olddeck : deck) (whichCard : int) : deck =
 
     newdeck
 
-
+(*find index or certain card in deck*)
 let rec index_of_card (item : card) (cardlist : deck) (index : int) : int =
-    (*
-    let () = print_endline "in index of card" in
-    *)
     match cardlist with
     | [] -> -1
     | first :: tail -> if first = item then index else index_of_card item tail (index+1)
@@ -147,6 +137,7 @@ let print_card (cardIn : card) : unit =
     let () = print_endline cardstring in
     ()
 
+    (*helper method when i tested the program, ignore*)
 let rec createHand (decksofar: deck): deck =
     if List.length decksofar == 5 then
     let () = print_endline "Success in createHand" in    
@@ -160,6 +151,8 @@ let rec createHand (decksofar: deck): deck =
     let newcard = {rank=ranktype; suit=suittype} in
     createHand (newcard :: decksofar)
 
+
+(*prints all cards of deck*)
 let rec print_deck (d : deck) (curcard : int) : unit =
     if curcard == List.length d then () else
     let card = List.nth d curcard in

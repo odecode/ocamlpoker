@@ -15,7 +15,6 @@ let rec calc_bot_bets (num_players : int) (players : returnplayer list) (curbot_
   if num_players-1 == curbot_index then returnlist else
   let currentbotretplayer = List.nth players curbot_index in
   let currentbot = currentbotretplayer.playerback in
-  (* let bothand = currentbot.cards in *)
   let bot_bet_result = Player.bot_bet currentbot in
   let betstr = "Bot " ^ string_of_int currentbot.id ^ " bets " ^ string_of_int bot_bet_result in
   let () = print_endline betstr in

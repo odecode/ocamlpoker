@@ -10,35 +10,24 @@ let rec check_same_rank (hand: deck) (cardtocheck_index: int) (curcard_index: in
   else check_same_rank hand cardtocheck_index (curcard_index+1) samesofar
 
 
-  let rec check_same_suit (hand: deck) (cardtocheck_index: int) (curcard_index: int) (samesofar: int)  : int =
-  if curcard_index > 4 then samesofar else
-   let curcard = List.nth hand curcard_index in
-   let cardtocheck = List.nth hand cardtocheck_index in
- 
-   if curcard.suit == cardtocheck.suit then check_same_suit hand cardtocheck_index (curcard_index+1) (samesofar+1)
-   else check_same_suit hand cardtocheck_index (curcard_index+1) samesofar
- 
+let rec check_same_suit (hand: deck) (cardtocheck_index: int) (curcard_index: int) (samesofar: int)  : int =
+if curcard_index > 4 then samesofar else
+  let curcard = List.nth hand curcard_index in
+  let cardtocheck = List.nth hand cardtocheck_index in
+
+  if curcard.suit == cardtocheck.suit then check_same_suit hand cardtocheck_index (curcard_index+1) (samesofar+1)
+  else check_same_suit hand cardtocheck_index (curcard_index+1) samesofar
 
 
-  let rec samecheck (func : deck -> int -> int -> int -> int) (handIn: deck) (cardtocheckindex : int) (returnlist : int list) : int list =
-    if cardtocheckindex == 5 then returnlist else
-    let samenumas = func handIn cardtocheckindex 0 0 in
-    samecheck func handIn (cardtocheckindex+1) (samenumas :: returnlist)
 
-  (* let rec printsamecards (sc : int list) (cur:int) : unit =
-    if cur == List.length sc then ()
-    else
-    let curint = List.nth sc cur in
-    let curstr = string_of_int curint in
-    let () = print_endline curstr in 
-    printsamecards sc (cur+1) *)
-
+let rec samecheck (func : deck -> int -> int -> int -> int) (handIn: deck) (cardtocheckindex : int) (returnlist : int list) : int list =
+  if cardtocheckindex == 5 then returnlist else
+  let samenumas = func handIn cardtocheckindex 0 0 in
+  samecheck func handIn (cardtocheckindex+1) (samenumas :: returnlist)
 
 let has_flush (hand : deck) : bool =
   
   let samecards = samecheck check_same_suit hand 0 [] in
-
-  (* let () = printsamecards samecards 0 in *)
 
   let existsFourSame = List.exists (fun num -> num >= 4) samecards in
   if existsFourSame then true else false
@@ -47,8 +36,6 @@ let has_flush (hand : deck) : bool =
 let has_fullhouse (hand: deck) : bool =
   
   let samecards = samecheck check_same_rank hand 0 [] in
-
-  (* let () = printsamecards samecards 0 in *)
 
   let existsTwoSame = List.exists (fun num -> num == 2) samecards in
   let existsThreeSame = List.exists (fun num -> num == 3) samecards in
@@ -77,31 +64,12 @@ let has_straight (hand : deck) : bool =
 
   let newace = {rank = (int_to_rank 13); suit = (int_to_suit 0)} in
 
-  let copyhand = newace :: (List.filter (fun card -> (rank_to_int card.rank) == 0) hand ) in
-
-  (* let chlen = List.length copyhand in *)
-
-  (* let () = print_endline "chlen " in
-  
-  let () = print_endline (string_of_int chlen) in
-  
-  let () = print_endline "Hand before sort" in
-  
-  let () = print_deck hand 0 in
-
-  let () =  print_endline "Copyhand " in 
-  let () = print_deck copyhand 0 in *)
-  
+  let copyhand = newace :: (List.filter (fun card -> (rank_to_int card.rank) == 0) hand ) in  
   
   let hand_sorted = List.sort (fun x y -> compare (rank_to_int x.rank) (rank_to_int y.rank)) hand in
   
   let copyhand_sorted = List.sort(fun x y -> compare (rank_to_int x.rank) (rank_to_int y.rank)) copyhand in
-(* 
-  let () = print_endline "Hand after sort" in
-
-  let () = print_deck hand_sorted 0 in *)
-
-  
+ 
 
   let rec check_next_bigger (handIn : deck) (anslist : bool list) (curcard_index : int) : bool list =
     if curcard_index == (List.length handIn)-1 then anslist else
@@ -132,12 +100,12 @@ let has_straight (hand : deck) : bool =
     let quads = has_quads hand in
     let triplets = has_triplet hand in
     let pair = has_pair hand in
-    if ((rank_to_int highest_card.rank) == 12  || (rank_to_int highest_card.rank) == 13) && straight && flush then 100
-    else if straight && flush then 95
-    else if quads then 90
-    else if fullhouse then 80
-    else if flush then 70
-    else if straight then 60
-    else if triplets then 50
-    else if pair then 40
+    if ((rank_to_int highest_card.rank) == 12  || (rank_to_int highest_card.rank) == 13) && straight && flush then 60
+    else if straight && flush then 55
+    else if quads then 50
+    else if fullhouse then 40
+    else if flush then 35
+    else if straight then 30
+    else if triplets then 25
+    else if pair then 20
     else rank_to_int highest_card.rank

@@ -8,13 +8,12 @@ type deckpair = {maindeck: deck; hand: deck}
 let createplayer (mdeck : deck) (which : int) (isbot : bool) (cashIn : int) : returnplayer =
   let rec givecard (maindeck : deck) (drawncards: int) (returndeck : deck) : deckpair =
     if drawncards == 5 then {maindeck = maindeck; hand = returndeck} else
-      (*
-      let () = print_endline "in else" in
-      *)
+      
     let newcard = draw_random_card maindeck in
     let newcard_index = index_of_card newcard maindeck 0 in
     let deck_minus_newcard = delete_from_deck2 maindeck newcard_index in
     givecard deck_minus_newcard (drawncards+1) (newcard :: returndeck) in
+  
   let carddeckpair = givecard mdeck 0 [] in
   let playerscards = carddeckpair.hand in
   let maindeckback = carddeckpair.maindeck in
@@ -75,11 +74,6 @@ let bot_bet (bot: player) : int =
   let bluffCompareTo = Random.float 1.0 in
   
   let bet_sum = calc_bet base_bet score bluffFactor bluffCompareTo in
-  (* let () = print_endline (string_of_int score) in
-  let () = print_endline (Float.to_string base_bet) in
-  let () = print_endline (Float.to_string bluffFactor) in
-  let () = print_endline (Float.to_string bluffCompareTo) in
-  let () = print_endline (Float.to_string bet_sum) in *)
   let largerThan = compare bet_sum (Float.of_int bot.cash) in
 
   if largerThan > 0 then bot.cash else 
