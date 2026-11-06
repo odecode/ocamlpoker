@@ -1,12 +1,21 @@
 # OCamlPoker
 
-A small terminal poker game written in OCaml by Otto Westerlund. Play against computer-controlled opponents, bet on a five-card hand, and carry your remaining cash into the next round.
+A terminal poker demo written in OCaml by Otto Westerlund. Play against computer-controlled opponents, place a bet on your five-card hand, and see who takes the round.
 
-This is a learning project with simplified betting and hand evaluation. It is not a complete implementation of standard poker rules; see [Known limitations](#known-limitations).
+Built as a hands-on learning project, OCamlPoker explores card modeling, recursive game flow, mutable player state, and randomized bot decisions through a small, interactive game.
+
+## At a glance
+
+- One human player against computer-controlled opponents.
+- Five-card hands dealt from a shared 52-card deck.
+- A starting balance of 100 cash per player.
+- Bot betting influenced by hand scores, available cash, and randomized aggression.
+- A simple terminal interface with revealed hands after each round.
+- Repeat rounds with session cash balances carried forward.
 
 ## Quick start
 
-You need Git, an OCaml compiler, and **Dune 3.1 or newer**. The game uses the OCaml standard library and has no external runtime library dependencies. The commands below work in a Unix-like shell, including Linux through WSL.
+You need Git, an OCaml compiler, and **Dune 3.1 or newer**. The game uses the OCaml standard library with no external runtime library dependencies. These commands work in a Unix-like shell, including Linux through WSL.
 
 With [opam](https://opam.ocaml.org/doc/Install.html) installed and initialized, and an OCaml switch selected:
 
@@ -21,83 +30,48 @@ dune build
 dune exec poker
 ```
 
-Run Dune from the **`poker/` subdirectory**, which contains `dune-project`. You can also launch the executable with `dune exec ./bin/main.exe`.
+Run Dune from the **`poker/` subdirectory**, which contains `dune-project`. You can also launch the game with `dune exec ./bin/main.exe`.
 
-The source was successfully built and a complete single-hand session was exercised with **OCaml 4.11.1 and Dune 3.1.1**. Other compiler versions have not been verified here. The repository includes generated `_build/` files; build from source rather than relying on those checked-in artifacts.
+Build and single-round gameplay verified with **OCaml 4.11.1 and Dune 3.1.1**.
 
 ## How to play
 
-1. Enter the total number of players, **including yourself**. Use **2–10** for a game against bots: each player needs five cards from the shared 52-card deck.
-2. Everyone starts with **100 cash**. Each round deals five new cards to every player, without replacement within that round.
-3. The bots place their bets, and the game shows the pot and your cards.
-4. Enter a non-negative integer bet. A bet above your available cash is reduced to your remaining balance.
-5. The game selects the highest-scoring hand, reports the winner, and reveals the bots' cards.
-6. Enter **`1`** to play another round, or **`0`** (or any other integer except `1`) to quit. Play also ends when your cash reaches zero.
+1. Enter the total number of players, **including yourself**. Choose **2–10** for a game against bots.
+2. Everyone starts with **100 cash**, and each player receives five cards.
+3. The bots place their bets. The game then displays the pot, your cards, and your available cash.
+4. Enter a **non-negative integer** bet. A bet above your available cash is reduced to your remaining balance.
+5. The game compares hand scores, announces the winner, and reveals the bots' cards.
+6. Enter **`1`** to play another round or **`0`** to quit. Play also ends when your cash reaches zero.
 
-Cash balances persist only for the current session. Bot bets depend on their cash, hand score, randomly assigned aggression, and a random bluff comparison. Bot aggression is regenerated each round.
+Each round uses a fresh deck and a single betting step. You place your bet after the bots and do not need to match their bets. Cash balances last for the current session.
 
-There are no community cards, card exchanges, folds, calls, raises, or multiple betting rounds. You enter one bet after the bots have bet; you do not have to match their bets.
+### Try a scripted round
 
-For a non-interactive smoke test from `poker/`:
+From `poker/`, run:
 
 ```sh
 printf '2\n5\n0\n' | dune exec poker
 ```
 
-This starts a two-player game, bets 5, and quits after one hand. Cards, bot bets, and the result vary between runs.
+This starts a game against one bot, bets 5, and quits after the hand. Cards, bot bets, and the outcome vary between runs.
 
-## Project layout
+## Explore the code
 
-```text
-poker/
-├── dune-project        # Dune project and package metadata
-├── poker.opam          # Generated opam package definition
-├── bin/
-│   ├── dune            # Executable definition; public command: poker
-│   ├── main.ml         # Terminal prompts, round loop, and player payout
-│   ├── deck.ml[i]      # Cards, ranks, suits, deck creation, and drawing
-│   ├── player.ml[i]    # Player state, dealing, cash, and bot betting
-│   ├── handscore.ml[i] # Hand classification and numeric scores
-│   ├── gamehelper.ml  # Bot bets, winner selection, and round helpers
-│   ├── suit.ml         # Separate suit type declaration
-│   ├── card.ml         # Empty placeholder
-│   └── bot.ml          # Empty placeholder; bot logic lives in player.ml
-├── lib/dune            # Library declaration
-└── test/
-    ├── dune            # Test executable definition
-    └── poker.ml        # Currently empty
-```
+The project lives in `poker/`, with gameplay modules in `bin/`:
 
-Here, `.ml[i]` denotes an implementation (`.ml`) and its interface (`.mli`). The gameplay implementation lives in `bin/`; `lib/` currently contains no gameplay modules.
+| File | Purpose |
+| --- | --- |
+| [`main.ml`](poker/bin/main.ml) | Terminal prompts and the round loop |
+| [`deck.ml`](poker/bin/deck.ml) | Card types, deck creation, random drawing, and card display |
+| [`player.ml`](poker/bin/player.ml) | Player state, dealing, cash balances, and bot betting |
+| [`handscore.ml`](poker/bin/handscore.ml) | Hand classification and numeric scoring |
+| [`gamehelper.ml`](poker/bin/gamehelper.ml) | Collecting bets, selecting a winner, and revealing hands |
+| [`dune-project`](poker/dune-project) | Build configuration and package metadata |
 
-## Development and testing
+The deck, player, and hand-scoring modules also have `.mli` interfaces describing their exposed types and functions. Dune generates `poker.opam` from the metadata in `dune-project`.
 
-From `poker/`:
+To explore the implementation, start with `main.ml` and follow the calls into the dealing, betting, and scoring modules. The scripted round above is a convenient way to try changes to the game flow.
 
-```sh
-dune build
-dune runtest
-```
+## Acknowledgments
 
-Both commands pass with the toolchain noted above. **The test file is empty**, so a successful `dune runtest` does not validate poker rules or gameplay. The scripted session above checks startup, dealing, betting, and normal exit, but is not a deterministic rules test.
-
-Package metadata in `dune-project` still contains template author, URL, and description values. Edit that file when updating metadata: `poker.opam` is generated by Dune.
-
-## Known limitations
-
-The current implementation differs from standard poker in several important ways:
-
-- **Input is not validated.** Non-integer input or end-of-input can terminate the game. Invalid player counts can fail during player creation or dealing; more than 10 players exhausts the deck. Negative bets are accepted by the code and produce invalid cash accounting. Use the input ranges described above.
-- **Hand evaluation is incomplete.** Two pair receives the same score as one pair, and equal-category hands do not receive proper rank or kicker comparisons. Aces are represented as low cards in the generated deck; ace-low and ace-high straights are not recognized correctly. Flush detection accepts four matching suits instead of requiring five, and the top straight-flush classification is also nonstandard.
-- **Ties are not split.** Winner selection chooses one player from the sorted scores, including when multiple hands have equal scores.
-- **Bot winnings are not credited.** Bets are deducted from all players, but the pot is added to a cash balance only when the human wins. Bots therefore lose cash without receiving payouts for their winning hands.
-- **There are no side pots or elimination rules for bots.** Bots with no cash remain in subsequent rounds and can still be selected as winners.
-- **There is no saved progress, network multiplayer, or graphical interface.**
-
-These are properties of the current code, not optional game modes. Useful next steps include regression tests for hand ranking, payout conservation, ties, and invalid input.
-
-## Acknowledgments and license
-
-The comment in [`deck.ml`](poker/bin/deck.ml) credits [jakekara/ocaml-cardstuff](https://github.com/jakekara/ocaml-cardstuff/blob/master/cards.ml) as an inspiration and a starting point for learning OCaml.
-
-The repository currently contains **no license file**. The `LICENSE` value in the package metadata is a placeholder, not a license grant.
+Parts of the deck implementation were inspired by [jakekara/ocaml-cardstuff](https://github.com/jakekara/ocaml-cardstuff/blob/master/cards.ml), which served as a starting point for learning OCaml. See the attribution in [`deck.ml`](poker/bin/deck.ml).
