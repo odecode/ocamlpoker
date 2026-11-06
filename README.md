@@ -75,3 +75,7 @@ To explore the implementation, start with `main.ml` and follow the calls into th
 ## Acknowledgments
 
 Parts of the deck implementation were inspired by [jakekara/ocaml-cardstuff](https://github.com/jakekara/ocaml-cardstuff/blob/master/cards.ml), which served as a starting point for learning OCaml. See the attribution in [`deck.ml`](poker/bin/deck.ml).
+
+## Note
+
+This README was generated with AI assistance. The game itself is entirely handwritten.
